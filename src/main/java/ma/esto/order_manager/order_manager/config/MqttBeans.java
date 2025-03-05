@@ -1,5 +1,8 @@
 package ma.esto.order_manager.order_manager.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ma.esto.order_manager.order_manager.Models.Order;
+import ma.esto.order_manager.order_manager.repositories.OrderRepository;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +25,13 @@ public class MqttBeans {
     private String CLIENT_ID;
     @Value("${mqtt.topic}")
     private String TOPIC;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final OrderRepository orderRepository;
+
+    public MqttBeans(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
@@ -54,7 +64,14 @@ public class MqttBeans {
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler handler() {
         return ((message) -> {
-            System.out.println("Received message: " + message.getPayload());
+            try {
+                String payload = message.getPayload().toString();
+                Order order = objectMapper.readValue(payload, Order.class);
+                orderRepository.save(order);
+                System.out.println("Received message: " + message.getPayload());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
