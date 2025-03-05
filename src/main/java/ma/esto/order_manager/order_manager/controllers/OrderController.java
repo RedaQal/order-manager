@@ -3,6 +3,7 @@ package ma.esto.order_manager.order_manager.controllers;
 import ma.esto.order_manager.order_manager.Models.Order;
 import ma.esto.order_manager.order_manager.repositories.OrderRepository;
 import ma.esto.order_manager.order_manager.services.MqttMessageService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,8 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public String order(@RequestBody Order order) {
+    public ResponseEntity<String> order(@RequestBody Order order) {
         mqttMessageService.sendMessage(order);
-        return "Success";
+        return new ResponseEntity<>("Order created", HttpStatus.CREATED);
     }
 }
