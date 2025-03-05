@@ -1,7 +1,9 @@
 package ma.esto.order_manager.order_manager.Models;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "products")
 @Data
 public class Product {
     private String productId;
