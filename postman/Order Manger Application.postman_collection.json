@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "f388873e-4dab-417e-958f-1130bc4e4527",
+		"name": "Order Manger Application",
+		"description": "this collection contains the requests to test the order-manager application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42652116"
+	},
+	"item": [
+		{
+			"name": "get orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders"
+					]
+				},
+				"description": "Get all orders that exsit in the db via orders Rest API"
+			},
+			"response": []
+		},
+		{
+			"name": "send an order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"orderId\": \"ORD-2025-0003\",\r\n  \"customerId\": \"CUST-12345\",\r\n  \"items\": [\r\n    {\r\n      \"productId\": \"PROD-789\",\r\n      \"productName\": \"Laptop ThinkPad X1\",\r\n      \"quantity\": 2,\r\n      \"unitPrice\": 1299.99,\r\n      \"currency\": \"EUR\"\r\n    },\r\n    {\r\n      \"productId\": \"PROD-456\",\r\n      \"productName\": \"Écran 27 pouces 4K\",\r\n      \"quantity\": 1,\r\n      \"unitPrice\": 349.99,\r\n      \"currency\": \"EUR\"\r\n    }\r\n  ],\r\n  \"shippingAddress\": {\r\n    \"street\": \"123 Rue de la Paix\",\r\n    \"city\": \"Paris\",\r\n    \"postalCode\": \"75001\",\r\n    \"country\": \"France\"\r\n  },\r\n  \"paymentMethod\": \"CREDIT_CARD\",\r\n  \"totalAmount\": 2949.97,\r\n  \"currency\": \"EUR\",\r\n  \"status\": \"PENDING\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders"
+					]
+				},
+				"description": "Send an order to the application to get stored in the db after going through the mqtt broker"
+			},
+			"response": []
+		},
+		{
+			"name": "get products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				},
+				"description": "Get all produts that exsit in the db via product Rest API"
+			},
+			"response": []
+		},
+		{
+			"name": "add new product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\": \"PROD-789\",\r\n    \"productName\": \"Laptop ThinkPad X1\",\r\n    \"quantity\": 2,\r\n    \"unitPrice\": 1299.99,\r\n    \"currency\": \"EUR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				},
+				"description": "Save a product into the db"
+			},
+			"response": []
+		}
+	]
+}
